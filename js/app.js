@@ -1,13 +1,20 @@
-const loadAll = async () => {
+const loadAll = async (dataLimit) => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
     const res = await fetch(url);
     const data = await res.json();
-    displayAll(data.data.tools);
+    displayAll(data.data.tools, dataLimit);
   };
 
-  const displayAll = (tools) => {
+  const displayAll = (tools, dataLimit) => {
     const toolsContainer = document.getElementById("tools-container");
     toolsContainer.innerText = '';
+    if (dataLimit === true) {
+        tools = tools.slice(0, 6);
+        document.getElementById("btn-show-more").classList.remove("d-none");
+      } else {
+        document.getElementById("btn-show-more").classList.add("d-none");
+      }
+
     tools.forEach((tool) => {
       toolsContainer.innerHTML += `
           <div class="col">
@@ -37,5 +44,8 @@ const loadAll = async () => {
             </div>`;
     });
   };
+  document.getElementById("btn-show-more").addEventListener("click", function () {
+    loadAll(false);
+  });
 
-  loadAll();
+loadAll(true);
