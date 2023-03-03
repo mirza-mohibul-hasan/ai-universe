@@ -33,10 +33,14 @@ const displayAll = (tools, dataLimit) => {
                 <div class="card-footer d-flex justify-content-between align-items-center">
                   <div>
                       <h5 class="card-title">${tool.name}</h5>
-                      <small class="text-muted"><i class="fa-solid fa-calendar-days"></i> ${tool.published_in}</small>
+                      <small class="text-muted"><i class="fa-solid fa-calendar-days"></i> ${
+                        tool.published_in
+                      }</small>
                   </div>
                   <div>
-                      <button class ="btn btn-light" data-bs-toggle="modal" data-bs-target="#toolDetailsModal"><i class="fa-solid fa-arrow-right text-danger"></i></button>
+                      <button onclick="loadToolDetails('${
+                        tool.id
+                      }')" class ="btn btn-light" data-bs-toggle="modal" data-bs-target="#toolDetailsModal"><i class="fa-solid fa-arrow-right text-danger"></i></button>
                   </div>
                 </div>
               </div>
@@ -46,5 +50,36 @@ const displayAll = (tools, dataLimit) => {
 document.getElementById("btn-show-more").addEventListener("click", function () {
   loadAll(false);
 });
+
+const loadToolDetails = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  displaytoolDetails(data.data);
+};
+const displaytoolDetails = (tool) => {
+  console.log(tool);
+  const modalBody = document.getElementById("modal-body");
+  modalBody.innerHTML = `
+          <div class="row">
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            <div class="card border border-danger" style="background: rgba(235, 87, 87, 0.10);">
+              <div class="card-body">
+                <h5 class="card-title">${tool.description}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+          </div>
+        </div>
+    `;
+};
 
 loadAll(true);
