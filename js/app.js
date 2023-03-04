@@ -20,7 +20,7 @@ const displayAll = (tools, dataLimit) => {
    let list= tool.features;
    const featureList = list.map((f)=>`<li>${f}</li>`).join('');
 
-// console.log(featureList);
+      // console.log(featureList);
     
     toolsContainer.innerHTML += `
           <div class="col">
@@ -60,7 +60,20 @@ const loadToolDetails = async (id) => {
   displaytoolDetails(data.data);
 };
 const displaytoolDetails = (tool) => {
- console.log(Array.isArray(tool.pricing));
+//  console.log(Array.isArray(tool.pricing));
+ console.log(Array.isArray(tool.integrations));
+
+  let integrationsList;
+    if(Array.isArray(tool.integrations)){
+        const list= tool.integrations;
+        integrationsList = list.map((f)=>`<li>${f}</li>`).join('');
+        console.log(integrationsList);
+    }
+    else{
+      integrationsList = '<p class="">No Data Found</p>';
+      console.log(integrationsList);
+    }
+    
   
   const modalBody = document.getElementById("modal-body");
   modalBody.innerHTML = `
@@ -102,9 +115,7 @@ const displaytoolDetails = (tool) => {
                     </ul>
                     <ul>
                         <h5 class="card-title">Integrations</h5>
-                        <li></li>
-                        <li></li>
-                        <li></li>
+                        ${integrationsList}
                     </ul>
                 </div>
                 <!-- DownSection End -->
