@@ -61,19 +61,33 @@ const loadToolDetails = async (id) => {
 };
 const displaytoolDetails = (tool) => {
 //  console.log(Array.isArray(tool.pricing));
- console.log(Array.isArray(tool.integrations));
+//  console.log(Array.isArray(tool.integrations));
 
   let integrationsList;
     if(Array.isArray(tool.integrations)){
         const list= tool.integrations;
         integrationsList = list.map((f)=>`<li>${f}</li>`).join('');
-        console.log(integrationsList);
+        // console.log(integrationsList);
     }
     else{
       integrationsList = '<p class="">No Data Found</p>';
-      console.log(integrationsList);
+      // console.log(integrationsList);
     }
-    console.log(tool.features[1]['feature_name'])
+    // console.log(tool.features[1]['feature_name'])
+    // console.log(tool.input_output_examples[0].input)
+    // console.log(tool.input_output_examples[0].output)
+    // console.log(Array.isArray(tool.input_output_examples));
+
+    let inputOutputList;
+    if(Array.isArray(tool.input_output_examples)){
+      inputOutputList = `<h5 class="text-center">${tool.input_output_examples[0].input}</h5>
+      <p class="text-center">${tool.input_output_examples[0].output}</p>`
+    }
+    else{
+      inputOutputList = `<h5 class="text-center">Can you give any example?</h5>
+      <p class="text-center">No! Not Yet! Take a break!!!</p>`
+    }
+
   const modalBody = document.getElementById("modal-body");
   modalBody.innerHTML = `
           <div class="row">
@@ -128,7 +142,7 @@ const displaytoolDetails = (tool) => {
               <div class="card-body">
                 <p class="text-end" style="position: absolute;right:1;">Accuracy</p>
                 <img src="${tool.image_link[0]}" alt="" class="img-fluid rounded ">
-                <h5></h5>
+                ${inputOutputList}
               </div>
             </div>
           </div>
