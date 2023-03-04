@@ -15,11 +15,11 @@
     <!-- Font Aw -->
     <script src="https://kit.fontawesome.com/81f5800f56.js" crossorigin="anonymous"></script>
   </head>
-  <body>
+  <body onload="loadAll(true, false)">
     <header class="container">
       <h1 class="text-center my-3">AI Universe Hub</h1>
       <div class="d-flex justify-content-center my-3">
-        <button class="btn btn-danger text-center">Sort By Date</button>
+        <button id="btn-sort-date" class="btn btn-danger text-center">Sort By Date</button>
       </div>
     </header>
     <main>
@@ -40,7 +40,7 @@
         <div class="modal modal-xl fade" id="toolDetailsModal" tabindex="-1" aria-labelledby="toolDetailsModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-              <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="position: absolute; color: white; top: -15px; right: -15px; border-radius: 50%; border: none; background: #EB5757;"><i class="fa-sharp fa-solid fa-xmark"></i></button> -->
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="position: absolute; color: white; top: -15px; right: -15px; border-radius: 50%; border: none; background: #EB5757;"><i class="fa-sharp fa-solid fa-xmark"></i></button>
               <div class="modal-header" style="border-bottom: none;">
                 <h1 class="modal-title fs-5" id="toolDetailsModalLabel"></h1>
                 <!-- <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button> -->
@@ -49,9 +49,17 @@
 
               </div>
               <div class="modal-footer" style="border-top: none;">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+      <!-- Spinner Section -->
+      <section id="loader" class="d-none">
+        <div style="height: 400px;" class="d-flex justify-content-center align-items-center">
+          <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden">Loading...</span>
           </div>
         </div>
       </section>

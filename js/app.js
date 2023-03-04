@@ -1,11 +1,12 @@
-const loadAll = async (dataLimit) => {
+const loadAll = async (dataLimit, isSort) => {
+  toggleSpinner(true);
   const url = `https://openapi.programming-hero.com/api/ai/tools`;
   const res = await fetch(url);
   const data = await res.json();
-  displayAll(data.data.tools, dataLimit);
+  displayAll(data.data.tools, dataLimit, isSort);
 };
 
-const displayAll = (tools, dataLimit) => {
+const displayAll = (tools, dataLimit, isSort) => {
   const toolsContainer = document.getElementById("tools-container");
   toolsContainer.innerText = "";
 
@@ -15,6 +16,13 @@ const displayAll = (tools, dataLimit) => {
   } else {
     document.getElementById("show-more").classList.add("d-none");
   }
+  if(isSort){
+    tools.sort((a, b) => {
+        let da = new Date(a.published_in);
+        let db = new Date(b.published_in);
+        return db - da;
+    });
+}
 
   tools.forEach((tool) => {
    let list= tool.features;
@@ -48,12 +56,11 @@ const displayAll = (tools, dataLimit) => {
               </div>
             </div>`;
   });
+  toggleSpinner(false);
 };
-document.getElementById("btn-show-more").addEventListener("click", function () {
-  loadAll(false);
-});
 
 const loadToolDetails = async (id) => {
+  toggleSpinner(true);
   const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
   const res = await fetch(url);
   const data = await res.json();
@@ -91,9 +98,6 @@ const displaytoolDetails = (tool) => {
     let calculatedAccuracy = 0;
     if(tool.accuracy.score !== null){
       calculatedAccuracy = tool.accuracy.score * 100;
-    }
-    else{
-      console.log('Accuracy not found');
     }
   const modalBody = document.getElementById("modal-body");
   modalBody.innerHTML = `
@@ -155,6 +159,42 @@ const displaytoolDetails = (tool) => {
           </div>
         </div>
     `;
+    toggleSpinner(false);
+};
+/* Spinner Function */
+const toggleSpinner = (isLoading) => {
+  const loaderSection = document.getElementById("loader");
+  if (isLoading) {
+    loaderSection.classList.remove("d-none");
+  } else {
+    loaderSection.classList.add("d-none");
+  }
 };
 
-loadAll(true);
+//Sorting and Showall value
+let showAll = false;
+let sortDate = false;
+
+// Calling Show All Button
+document.getElementById("btn-show-more").addEventListener("click", function () {
+  toggleSpinner(true);
+  showAll = true;
+  if(sortDate == true){
+    loadAll(false, true);
+  }
+  else{
+    loadAll(false, false);
+  }
+});
+
+// Calling Sort Button
+document.getElementById('btn-sort-date').addEventListener('click',function(){
+  toggleSpinner(true);
+  sortDate = true;
+  if(showAll == true){
+    loadAll(false, true)
+  }
+  else{
+    loadAll(true, true);
+  }
+})
