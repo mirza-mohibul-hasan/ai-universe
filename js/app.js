@@ -1,3 +1,4 @@
+/* Created by Mirza Mohibul Hasan*/
 const loadAll = async (dataLimit, isSort) => {
   toggleSpinner(true);
   const url = `https://openapi.programming-hero.com/api/ai/tools`;
@@ -9,13 +10,14 @@ const loadAll = async (dataLimit, isSort) => {
 const displayAll = (tools, dataLimit, isSort) => {
   const toolsContainer = document.getElementById("tools-container");
   toolsContainer.innerText = "";
-
+  //Show only 6 item or more
   if (dataLimit === true) {
     tools = tools.slice(0, 6);
     document.getElementById("show-more").classList.remove("d-none");
   } else {
     document.getElementById("show-more").classList.add("d-none");
   }
+  // sort card by date
   if(isSort){
     tools.sort((a, b) => {
         let da = new Date(a.published_in);
@@ -25,10 +27,9 @@ const displayAll = (tools, dataLimit, isSort) => {
 }
 
   tools.forEach((tool) => {
+    //For feature list on card
    let list= tool.features;
-   const featureList = list.map((f)=>`<li>${f}</li>`).join('');
-
-      // console.log(featureList);
+   const featureList = list.map((feature)=>`<li>${feature}</li>`).join('');
     
     toolsContainer.innerHTML += `
           <div class="col">
@@ -58,7 +59,7 @@ const displayAll = (tools, dataLimit, isSort) => {
   });
   toggleSpinner(false);
 };
-
+//For Specific tool details
 const loadToolDetails = async (id) => {
   toggleSpinner(true);
   const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
@@ -67,24 +68,17 @@ const loadToolDetails = async (id) => {
   displaytoolDetails(data.data);
 };
 const displaytoolDetails = (tool) => {
-//  console.log(Array.isArray(tool.pricing));
-//  console.log(Array.isArray(tool.integrations));
-
+  // Integration list
   let integrationsList;
-    if(Array.isArray(tool.integrations)){
-        const list= tool.integrations;
-        integrationsList = list.map((f)=>`<li>${f}</li>`).join('');
-        // console.log(integrationsList);
-    }
-    else{
-      integrationsList = '<p class="">No Data Found</p>';
-      // console.log(integrationsList);
-    }
-    // console.log(tool.features[1]['feature_name'])
-    // console.log(tool.input_output_examples[0].input)
-    // console.log(tool.input_output_examples[0].output)
-    // console.log(Array.isArray(tool.input_output_examples));
+  if(Array.isArray(tool.integrations)){
+      const list= tool.integrations;
+      integrationsList = list.map((f)=>`<li>${f}</li>`).join('');
+  }
+  else{
+    integrationsList = '<p class="">No Data Found</p>';
+  }
 
+    //Input and
     let inputOutputList;
     if(Array.isArray(tool.input_output_examples)){
       inputOutputList = `<h5 class="text-center">${tool.input_output_examples[0].input}</h5>
@@ -152,7 +146,7 @@ const displaytoolDetails = (tool) => {
               <div class="card-body">
                 <p class="fw-semibold text-white ${tool.accuracy.score === null?'d-none':''}" style="position: absolute;    right: 27px; top: 23px; background-color: #EB5757; padding: 5px; border-radius: 10px;">${calculatedAccuracy}% accuracy</p>
                 <img src="${tool.image_link[0]}" alt="" class="img-fluid rounded ">
-                ${inputOutputList}
+                <div class="w-75 mx-auto mt-3">${inputOutputList}</div>
               </div>
             </div>
           </div>
@@ -160,6 +154,7 @@ const displaytoolDetails = (tool) => {
     `;
     toggleSpinner(false);
 };
+
 /* Spinner Function */
 const toggleSpinner = (isLoading) => {
   const loaderSection = document.getElementById("loader");
