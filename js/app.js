@@ -146,7 +146,7 @@ const displaytoolDetails = (tool) => {
               <div class="card-body">
                 <p class="fw-semibold text-white ${tool.accuracy.score === null?'d-none':''}" style="position: absolute;    right: 27px; top: 23px; background-color: #EB5757; padding: 5px; border-radius: 10px;">${calculatedAccuracy}% accuracy</p>
                 <img src="${tool.image_link[0]}" alt="" class="img-fluid rounded ">
-                <div class="w-75 mx-auto mt-3">${inputOutputList}</div>
+                <div class="mx-auto mt-3" style="width:90%;">${inputOutputList}</div>
               </div>
             </div>
           </div>
