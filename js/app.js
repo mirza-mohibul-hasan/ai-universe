@@ -87,7 +87,14 @@ const displaytoolDetails = (tool) => {
       inputOutputList = `<h5 class="text-center">Can you give any example?</h5>
       <p class="text-center">No! Not Yet! Take a break!!!</p>`
     }
-
+    // Accuracy calculation
+    let calculatedAccuracy = 0;
+    if(tool.accuracy.score !== null){
+      calculatedAccuracy = tool.accuracy.score * 100;
+    }
+    else{
+      console.log('Accuracy not found');
+    }
   const modalBody = document.getElementById("modal-body");
   modalBody.innerHTML = `
           <div class="row">
@@ -140,7 +147,7 @@ const displaytoolDetails = (tool) => {
           <div class="col-sm-6">
             <div class="card">
               <div class="card-body">
-                <p class="text-end" style="position: absolute;right:1;">Accuracy</p>
+                <p class="fw-semibold text-white ${tool.accuracy.score === null?'d-none':''}" style="position: absolute;    right: 27px; top: 23px; background-color: #EB5757; padding: 5px; border-radius: 10px;">${calculatedAccuracy}% accuracy</p>
                 <img src="${tool.image_link[0]}" alt="" class="img-fluid rounded ">
                 ${inputOutputList}
               </div>
