@@ -107,8 +107,7 @@ const displaytoolDetails = (tool) => {
               <div class="card-body">
                 <h5 class="card-title">${tool.description}</h5>
                 <div id="price-container" class = "card-text d-flex justify-content-between fw-bold" style="gap:5px">
-                
-                <!-- {loadPrice(tool.pricing)} -->
+            
                 <div class="bg-white rounded p-2 text-success d-flex justify-content-center align-items-center text-center" style="flex:1;">
                     <div>
                         <p>${(Array.isArray(tool.pricing))? tool.pricing[0]?.price : 'Free of Cost/'}  </p>
