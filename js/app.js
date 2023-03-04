@@ -73,8 +73,7 @@ const displaytoolDetails = (tool) => {
       integrationsList = '<p class="">No Data Found</p>';
       console.log(integrationsList);
     }
-    
-  
+    console.log(tool.features[1]['feature_name'])
   const modalBody = document.getElementById("modal-body");
   modalBody.innerHTML = `
           <div class="row">
@@ -85,13 +84,13 @@ const displaytoolDetails = (tool) => {
                 <div id="price-container" class = "card-text d-flex justify-content-between fw-bold" style="gap:5px">
                 
                 <!-- {loadPrice(tool.pricing)} -->
-                <div class="bg-white rounded p-2 text-success d-flex justify-content-center align-items-center" style="flex:1;">
+                <div class="bg-white rounded p-2 text-success d-flex justify-content-center align-items-center text-center" style="flex:1;">
                     <div>
                         <p>${(Array.isArray(tool.pricing))? tool.pricing[0]?.price : 'Free of Cost/'}  </p>
                         <p>${(Array.isArray(tool.pricing))? tool.pricing[0]?.plan :'Basic'}</p>
                     </div>
                   </div>
-                  <div class="bg-white rounded p-2 text-warning d-flex justify-content-center align-items-center" style="flex:1;">
+                  <div class="bg-white rounded p-2 text-warning d-flex justify-content-center align-items-center text-center" style="flex:1;">
                     <div>
                         <p>${(Array.isArray(tool.pricing))? tool.pricing[1]?.price : 'Free of Cost/'}  </p>
                         <p>${(Array.isArray(tool.pricing))? tool.pricing[1]?.plan :'Pro'}</p>
@@ -109,9 +108,11 @@ const displaytoolDetails = (tool) => {
                 <div class="d-flex justify-content-between m-3">
                     <ul>
                         <h5 class="card-title">Features</h5>
-                        <li></li>
-                        <li></li>
-                        <li></li>
+                        <li class ="${tool.features[1]?'':'d-none'}">${tool.features[1]?tool.features[1]['feature_name']:''}</li>
+                        <li class ="${tool.features[2]?'':'d-none'}">${tool.features[1]?tool.features[2]['feature_name']:''}</li>
+                        <li class ="${tool.features[3]?'':'d-none'}">${tool.features[3]?tool.features[3]['feature_name']:''}</li>
+                        <li class ="${tool.features[4]?'':'d-none'}">${tool.features[4]?tool.features[4]['feature_name']:''}</li>
+                        <li class ="${tool.features[5]?'':'d-none'}">${tool.features[5]?tool.features[5]['feature_name']:''}</li>
                     </ul>
                     <ul>
                         <h5 class="card-title">Integrations</h5>
